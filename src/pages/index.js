@@ -1,21 +1,40 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import styled, { createGlobalStyle } from 'styled-components'
 
-import Layout from '../components/layout'
-import Image from '../components/image'
-import SEO from '../components/seo'
+const GlobalStyle = createGlobalStyle`
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+  }
+
+  *, *::before, *:after {
+    box-sizing: border-box;
+  }
+`
+
+const StyledWrapper = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: pink;
+  position: relative;
+`
+
+const H1 = styled.h1`
+  font-size: ${({ isBig }) => (isBig ? '5em' : '3em')};
+`
+// font-size: ${props => (props.isBig ? '5em' : '3em')};
 
 const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
+  <>
+    <GlobalStyle />
+    <StyledWrapper>
+      <H1 isBig>Hi people</H1>
+    </StyledWrapper>
+  </>
 )
 
 export default IndexPage
