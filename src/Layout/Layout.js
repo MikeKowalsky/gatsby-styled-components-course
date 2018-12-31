@@ -1,6 +1,6 @@
 import React from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
-import { colors } from '../utils/colors'
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { theme } from '../utils/theme'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -14,22 +14,27 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 `
-
+// props of theme-provider are available for every child
+// so we can take colors from them
+// works like ContextAPI
 const StyledWrapper = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: ${colors.dark};
+  background: ${({ theme }) => theme.colors.dark};
   position: relative;
 `
 
 const Layout = ({ children }) => (
-  <>
-    <GlobalStyle />
-    <StyledWrapper>{children}</StyledWrapper>
-  </>
+  <ThemeProvider theme={theme}>
+    {/* theme-provider can have only one child element */}
+    <>
+      <GlobalStyle />
+      <StyledWrapper>{children}</StyledWrapper>
+    </>
+  </ThemeProvider>
 )
 
 export default Layout

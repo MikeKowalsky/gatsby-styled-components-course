@@ -8,7 +8,7 @@ const IndexPage = () => (
   <Layout>
     <H1>Hello, people</H1>
 
-    <Button width="250px" as={Link} to="/about">
+    <Button as={Link} to="/about">
       About page
     </Button>
   </Layout>

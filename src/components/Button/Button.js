@@ -1,20 +1,22 @@
 import styled from 'styled-components'
-import { colors } from '../../utils/colors'
 
 const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  width: ${({ width }) => width};
+  width: 250px;
   height: 40px;
-  background: ${colors.primary};
   border-radius: 50px;
-  border: none;
-  color: ${colors.white};
+  border: 2px solid ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primary};
   font-size: 1em;
-  font-weight: 800;
+  font-weight: ${({ theme }) => theme.font.bold};
   transition: box-shadow 0.3s ease;
+
+  ${({ theme }) => theme.media.desktop} {
+    background: ${({ theme }) => theme.colors.white};
+  }
 
   :hover {
     box-shadow: 0 10px 20px -15px red;
