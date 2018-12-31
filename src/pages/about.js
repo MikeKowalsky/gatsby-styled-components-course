@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
+import posed from 'react-pose'
 import styled from 'styled-components'
-import { Link } from 'gatsby'
 import Button from '../components/Button/Button'
 import Layout from '../Layout/Layout'
 
@@ -26,7 +26,18 @@ const StyledWrapper = styled.div`
   grid-template-columns: repeat(2, 1fr);
 `
 
-const StyledH2 = styled.h2`
+const PosedH2 = posed.h2({
+  visible: {
+    x: 0,
+    opacity: 1,
+  },
+  hidden: {
+    x: '-150%',
+    opacity: 0,
+  },
+})
+
+const StyledH2 = styled(PosedH2)`
   font-size: 2em;
   text-align: center;
   color: white;
@@ -45,22 +56,37 @@ const StyledAd = styled.div`
   color: black;
 `
 
-const AboutPage = () => (
-  <Layout>
-    <h1>Hello people, this is about page</h1>
-    <Button as={Link} to="/">
-      Go back
-    </Button>
-    <StyledWrapper>
-      {data.map((item, i) => (
-        <>
-          <StyledH2 order={i}>{item.title}</StyledH2>
-          {/* below conditional rendering in map!!! */}
-          {item.ad && <StyledAd>{item.ad}</StyledAd>}
-        </>
-      ))}
-    </StyledWrapper>
-  </Layout>
-)
+class AboutPage extends Component {
+  state = {
+    visible: false,
+  }
+
+  toggleHeaders = () => {
+    this.setState(prevState => ({ visible: !prevState.visible }))
+  }
+
+  render() {
+    return (
+      <Layout>
+        <h1>{this.state.visible ? 'visible' : 'hidden'}</h1>
+        <Button onClick={this.toggleHeaders}>Toggle</Button>
+        <StyledWrapper>
+          {data.map((item, i) => (
+            <React.Fragment key={item.title}>
+              <StyledH2
+                order={i}
+                pose={this.state.visible ? 'visible' : 'hidden'}
+              >
+                {item.title}
+              </StyledH2>
+              {/* below conditional rendering in map!!! */}
+              {item.ad && <StyledAd>{item.ad}</StyledAd>}
+            </React.Fragment>
+          ))}
+        </StyledWrapper>
+      </Layout>
+    )
+  }
+}
 
 export default AboutPage
